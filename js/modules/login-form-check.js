@@ -30,20 +30,32 @@ $(document).ready(function() {
 					$.each(_inputs, function(index, val) {
 						var input = $(val),
 							value = input.val().trim(),
-							passField = _form.find('input:password');
-							emailError = $('.error--email'),
-							emailInvalid = $('.error--email-wrong');
-							passError = $('.error--pass');
-							errorWithDesc = $('.error--with-desc');
+
+							passField = _form.find('input:password'),
+							textPassError = passField.attr('data-error-empty'),
+
+							passTooltip = $('<div class="error error--pass">' + textPassError + '</div>'),
+
+							emailField = _form.find('.input--email'),
+							textEmailError = emailField.attr('data-error-empty'),
+							textEmailInvalid = emailField.attr('data-error-invalid'),
+
+							emailErrorTooltip = $('<div class="error error--email">' + textEmailError + '</div>'),
+							emailInvalidTooltip = $('<div class="error error--email-wrong">' + textEmailInvalid + '</div>'),
+
+							errorWithDesc = $('.error--with-desc'),
+							errorWithDescTooltip = $('<div class="error error--with-desc">Неверный email или пароль</div>');
 
 						if (value.length === 0) {
 							if (input.attr('type').toLowerCase() === 'email') {
-								emailError.removeClass('hidden');
-								emailInvalid.addClass('hidden');
-								errorWithDesc.addClass('hidden');
+								mainForm.find('.error--email').remove();
+								mainForm.find('.error--email-wrong').remove();
+								emailErrorTooltip.insertBefore(emailField);
 							}
 							if (input.attr('type').toLowerCase() === 'password') {
-								passError.removeClass('hidden');
+								mainForm.find('.error--with-desc').remove();
+								mainForm.find('.error--pass').remove();
+								passTooltip.insertBefore(passField);
 							}
 							_valid = false;
 						}
@@ -53,72 +65,68 @@ $(document).ready(function() {
 								var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2-4}\.)?[a-z]{2,4}$/i;
 								if (pattern.test(value)) {
 									if (value === email) {
-										errorWithDesc.addClass('hidden');
-										emailError.addClass('hidden');
-										emailInvalid.addClass('hidden');
-
-										console.log('Passfield' + passField.val());
+										mainForm.find('.error--email').remove();
+										mainForm.find('.error--email-wrong').remove();
+										mainForm.find('.error--with-desc').remove();
 
 										console.log('Email is correct!');
 										if (passField.val() === password) {
+											mainForm.find('.error--with-desc').remove();
 											_valid = true;
 										}
 										else {
-											errorWithDesc.removeClass('hidden');
+											errorWithDescTooltip.insertBefore(emailField);
 											_valid = false;
 										}
 									}
 									else {
-										emailError.addClass('hidden');
-										emailInvalid.addClass('hidden');
-										errorWithDesc.removeClass('hidden');
+										mainForm.find('.error--email').remove();
+										mainForm.find('.error--email-wrong').remove();
+										mainForm.find('.error--with-desc').remove();
+										errorWithDescTooltip.insertBefore(emailField);
 									}
 								}
 								else {
-									emailInvalid.removeClass('hidden');
+									emailInvalidTooltip.insertBefore(emailField);
 									_valid = false;
 								}
 							}
 						}
 
 						input.on('focus', function() {
+							mainForm.find('.error--with-desc').remove();
 							if (input.attr('type').toLowerCase() === 'email') {
-								emailInvalid.addClass('hidden');
-								emailError.addClass('hidden');
-								errorWithDesc.addClass('hidden');
+								mainForm.find('.error--email').remove();
+								mainForm.find('.error--email-wrong').remove();
 							}
 							if (input.attr('type').toLowerCase() === 'password') {
-								passError.addClass('hidden');
-								errorWithDesc.addClass('hidden');
+								mainForm.find('.error--pass').remove();
 							}
 						});
 
 						input.on('keydown', function() {
+							mainForm.find('.error--with-desc').remove();
 							if (input.attr('type').toLowerCase() === 'email') {
-								emailInvalid.addClass('hidden');
-								emailError.addClass('hidden');
-								errorWithDesc.addClass('hidden');
+								mainForm.find('.error--email').remove();
+								mainForm.find('.error--email-wrong').remove();
 							}
 							if (input.attr('type').toLowerCase() === 'password') {
-								passError.addClass('hidden');
-								errorWithDesc.addClass('hidden');
+								mainForm.find('.error--pass').remove();
 							}
 						});
 
 						input.on('change', function() {
+							mainForm.find('.error--with-desc').remove();
 							if (input.attr('type').toLowerCase() === 'email') {
-								emailInvalid.addClass('hidden');
-								emailError.addClass('hidden');
-								errorWithDesc.addClass('hidden');
+								mainForm.find('.error--email').remove();
+								mainForm.find('.error--email-wrong').remove();
 							}
 							if (input.attr('type').toLowerCase() === 'password') {
-								passError.addClass('hidden');
-								errorWithDesc.addClass('hidden');
+								mainForm.find('.error--pass').remove();
 							}
 						});
 
 						loginValidation.isValid = _valid;
-						console.log(loginValidation.isValid);
 
 					});
 
@@ -126,10 +134,10 @@ $(document).ready(function() {
 
 				_sendForm: function() {
 					if (loginValidation.isValid === true) {
-						emailInvalid.addClass('hidden');
-						emailError.addClass('hidden');
-						errorWithDesc.addClass('hidden');
-						passError.addClass('hidden');
+						mainForm.find('.error--email').remove();
+						mainForm.find('.error--email-wrong').remove();
+						mainForm.find('.error--pass').remove();
+						mainForm.find('.error--with-desc').remove();
 						mainForm.submit();
 					}
 				}

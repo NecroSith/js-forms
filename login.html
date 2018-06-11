@@ -24,15 +24,11 @@
 		</div>
 		<form class="plate" action="success.html">
 			<div class="plate__heading">Вход на сайт</div>
-			<div class="error error--email hidden">Введите email</div>
-			<div class="error error--email-wrong hidden">Неверный формат email</div>
-			<div class="error error--pass hidden">Введите пароль</div>
-			<div class="error error--with-desc hidden">Неверный email или пароль</div>
 			<div class="error-description hidden">
 				<p>Введите верные данные для входа или воспользуйтесь <a href="#">восстановлением пароля, </a>чтобы войти на сайт.</p>
 			</div>
-			<input class="input" type="email" placeholder="Введите почту" name="email"/>
-			<input class="input" type="password" placeholder="Пароль" name="password"/>
+			<input class="input input--email" type="email" placeholder="Введите почту" data-error-empty="Введите email"  data-error-invalid="Неверный формат email" name="email"/>
+			<input class="input" type="password" placeholder="Пароль" data-error-empty="Введите пароль" name="password"/>
 			<div class="plate__links">
 				<label class="label form__label-checkbox">
 					<input class="form__input-checkbox" type="checkbox"/><span class="form__checkbox"> </span>Запомнить меня
