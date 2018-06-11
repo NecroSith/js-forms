@@ -24,16 +24,8 @@
 		</div>
 		<form class="plate" action="success.html">
 			<div class="plate__heading">Регистрация</div>
-			<div class="error">Введите email</div>
-			<div class="error">Неверный формат email</div>
-			<div class="error">Введите пароль</div>
-			<div class="error error--with-desc">Данный email уже занят</div>
-			<div class="error-description">
-				<p>Используйте другой email чтобы создать новый аккаунт.</p>
-				<p>Или воспользуйтесь <a href="#">восстановлением пароля</a>, чтобы войти на сайт.</p>
-			</div>
-			<input class="input" type="text" placeholder="Введите имя" name="name"/>
-			<input class="input" type="password" placeholder="Пароль" name="password"/>
+			<input class="input input--email" type="email" placeholder="Введите почту" data-error-empty="Введите email"  data-error-invalid="Неверный формат email" name="email"/>
+			<input class="input" type="password" placeholder="Пароль" data-error-empty="Введите пароль" name="password"/>
 			<div class="plate__links">
 				<label class="label form__label-checkbox">
 					<input class="form__input-checkbox" type="checkbox"/><span class="form__checkbox"> </span>Запомнить меня
@@ -46,6 +38,7 @@
 		</div>
 	</div>
 	<script src="libs/jquery/jquery.min.js"></script>
+	<script src="js/modules/registration-form-check.js"></script>
 	<script src="js/main.js"></script>
 	<script defer="defer" src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </body>
